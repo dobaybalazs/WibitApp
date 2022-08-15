@@ -5,6 +5,7 @@ import './daily_costumers_screen.dart';
 import './manage_vests_screen.dart';
 
 import '../widgets/sheets/chart_sheet.dart';
+import '../widgets/sheets/add_vest_sheet.dart';
 
 class Page {
   final Widget body;
@@ -36,13 +37,9 @@ class _TabsScreenState extends State<TabsScreen> {
   void _startAddingNewVest(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
+      isScrollControlled: true,
       builder: (_) => GestureDetector(
-        child: Container(
-          height: 300,
-          child: Center(
-            child: const Text(':D'),
-          ),
-        ),
+        child: AddVestSheet(),
         onTap: () {},
         behavior: HitTestBehavior.opaque,
       ),

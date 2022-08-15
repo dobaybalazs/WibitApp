@@ -39,7 +39,6 @@ class _BorrowSheetState extends State<BorrowSheet> {
                     });
                   },
                   activeColor: Theme.of(context).colorScheme.secondary,
-                  inactiveColor: Color.fromRGBO(0, 150, 0, 0.2),
                   min: 0,
                   max: 18,
                   divisions: 18,
@@ -53,7 +52,10 @@ class _BorrowSheetState extends State<BorrowSheet> {
             width: mediaQuery.size.width * 0.9,
             child: TextField(
               decoration: InputDecoration(
-                labelText: 'Név:',
+                label: Text(
+                  'Név:',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
               ),
               controller: _nameController,
             ),
