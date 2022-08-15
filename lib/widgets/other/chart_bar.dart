@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class ChartBar extends StatelessWidget {
   final String name;
   final int quant;
+  final int totalVestNum;
 
-  ChartBar({@required this.name, @required this.quant});
+  ChartBar({@required this.name, @required this.quant,@required this.totalVestNum});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class ChartBar extends StatelessWidget {
                             color: Theme.of(context).colorScheme.secondary),
                       ),
                       FractionallySizedBox(
-                        heightFactor: 1 - (quant / 30),
+                        heightFactor: 1 - (quant / totalVestNum),
                         child: Container(
                           decoration: BoxDecoration(
                             color: Colors.white,

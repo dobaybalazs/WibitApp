@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../other/chart_bar.dart';
+import '../../providers/basic_vests.dart';
 
-class ChartSheet extends StatefulWidget {
-  const ChartSheet({Key key}) : super(key: key);
-
-  @override
-  State<ChartSheet> createState() => _ChartSheetState();
-}
-
-class _ChartSheetState extends State<ChartSheet> {
+class ChartSheet extends StatelessWidget {
   Map<String, int> _quants = {
-    'Mini': 15,
-    'XS': 10,
-    'S': 8,
-    'M': 2,
-    'L': 20,
-    'XL': 22,
-    'XXL': 2
+    'Mini': 0,
+    'XS': 0,
+    'S': 0,
+    'M': 0,
+    'L': 0,
+    'XL': 0,
+    'XXL': 0,
   };
-
   @override
   Widget build(BuildContext context) {
+    final vests = Provider.of<BasicVests>(context);
+    vests.vests.forEach(((element) => _quants[element.size] += 1));
     return Container(
       height: 300,
       padding: const EdgeInsets.all(0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: _quants.entries.map((e) => ChartBar(name:e.key,quant:e.value)).toList(),
+        children: _quants.entries
+            .map((e) => ChartBar(
+                  name: e.key,
+                  quant: e.value,
+                  totalVestNum: vests.itemCount,
+                ))
+            .toList(),
       ),
     );
   }
