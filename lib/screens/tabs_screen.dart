@@ -52,13 +52,33 @@ class _TabsScreenState extends State<TabsScreen> {
       Page(
         body: BorrowedVestsScreen(),
         appBar: AppBar(
-          title: const Text('Kölcsönzött mellények'),
+          title: Row(children: <Widget>[
+            Image.asset(
+              'assets/images/logo.png',
+              fit: BoxFit.cover,
+              height: 32,
+            ),
+            const SizedBox(
+              width: 9,
+            ),
+            const Text('Kölcsönzött mellények')
+          ]),
         ),
       ),
       Page(
         body: DailyCostumersScreen(),
         appBar: AppBar(
-          title: const Text('Mai vásárlók'),
+          title: Row(children: <Widget>[
+            Image.asset(
+              'assets/images/logo.png',
+              fit: BoxFit.cover,
+              height: 32,
+            ),
+            const SizedBox(
+              width: 9,
+            ),
+            const Text('Mai vásárlók')
+          ]),
         ),
       )
     ];
