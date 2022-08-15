@@ -4,6 +4,8 @@ import './borrowed_vests_screen.dart';
 import './daily_costumers_screen.dart';
 import './manage_vests_screen.dart';
 
+import '../widgets/sheets/chart_sheet.dart';
+
 class Page {
   final Widget body;
   final Widget appBar;
@@ -19,6 +21,33 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   List<Page> _pages = [];
   int _selectedPageIndex = 0;
+
+  void _showStats(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) => GestureDetector(
+        child: ChartSheet(),
+        onTap: () {},
+        behavior: HitTestBehavior.opaque,
+      ),
+    );
+  }
+
+  void _startAddingNewVest(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) => GestureDetector(
+        child: Container(
+          height: 300,
+          child: Center(
+            child: const Text(':D'),
+          ),
+        ),
+        onTap: () {},
+        behavior: HitTestBehavior.opaque,
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -40,11 +69,15 @@ class _TabsScreenState extends State<TabsScreen> {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.add),
-              onPressed: () {},
+              onPressed: () {
+                _startAddingNewVest(context);
+              },
             ),
             IconButton(
               icon: const Icon(Icons.bar_chart),
-              onPressed: () {},
+              onPressed: () {
+                _showStats(context);
+              },
             ),
           ],
         ),

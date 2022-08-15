@@ -28,6 +28,15 @@ class WibitApp extends StatelessWidget {
             fontSize: 22,
           ),
         ),
+        textTheme: TextTheme(
+          titleMedium: TextStyle(
+            fontSize: 18,
+          ),
+          titleSmall: TextStyle(
+            fontSize: 16,
+            color: Color(0xff262b2f),
+          ),
+        ),
       ),
       routes: {
         '/': (_) => TabsScreen(),

@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
 
+import '../sheets/borrow_sheet.dart';
+
 class BasicVest extends StatelessWidget {
   final int id;
 
   BasicVest({@required this.id});
+
+  void startBorrowingVest(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      isScrollControlled: true,
+      builder: (_) => GestureDetector(
+        child: BorrowSheet(),
+        onTap: () {},
+        behavior: HitTestBehavior.opaque,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +36,9 @@ class BasicVest extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          startBorrowingVest(context);
+        },
         child: Card(
           elevation: 4,
           margin: const EdgeInsets.symmetric(
@@ -38,13 +54,13 @@ class BasicVest extends StatelessWidget {
                 fit: BoxFit.cover,
                 height: 56,
               ),
-              title: const Text(
+              title: Text(
                 'Méret S',
-                style: TextStyle(fontSize: 18),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-              subtitle: const Text(
+              subtitle: Text(
                 'Szám: 56',
-                style: TextStyle(fontSize: 16),
+                style: Theme.of(context).textTheme.titleSmall,
               ),
             ),
           ),

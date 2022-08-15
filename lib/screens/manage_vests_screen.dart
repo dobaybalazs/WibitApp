@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/basic_vest.dart';
+import '../widgets/vestitems/basic_vest.dart';
 
 class ManageVestsScreen extends StatelessWidget {
   List<BasicVest> vests = [
