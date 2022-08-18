@@ -28,7 +28,6 @@ class BasicVests with ChangeNotifier {
     if (!_vests.any(((element) => element.id == id))) {
       _vests.add(BasicLifejacket(id: id, size: size));
     }
-
     notifyListeners();
   }
 

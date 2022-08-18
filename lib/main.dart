@@ -10,6 +10,7 @@ import './screens/tabs_screen.dart';
 
 //data
 import './providers/basic_vests.dart';
+import './providers/borrowed_vests.dart';
 
 void main() {
   runApp(WibitApp());
@@ -23,6 +24,9 @@ class WibitApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => BasicVests(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => BorrowedVests(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

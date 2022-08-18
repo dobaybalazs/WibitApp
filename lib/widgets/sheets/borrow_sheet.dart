@@ -1,9 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/borrowed_vests.dart' show BorrowedVests;
+import '../../providers/basic_vests.dart';
 
 class BorrowSheet extends StatefulWidget {
-  const BorrowSheet({Key key}) : super(key: key);
+  final int id;
+  final String size;
+
+  BorrowSheet({@required this.id, @required this.size});
 
   @override
   State<BorrowSheet> createState() => _BorrowSheetState();
@@ -17,6 +22,8 @@ class _BorrowSheetState extends State<BorrowSheet> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+    final borrowedVs = Provider.of<BorrowedVests>(context, listen: false);
+    final basicvs = Provider.of<BasicVests>(context, listen: false);
     return Container(
       height: mediaQuery.size.height * 0.6,
       padding: const EdgeInsets.all(18),
@@ -69,7 +76,14 @@ class _BorrowSheetState extends State<BorrowSheet> {
           Container(
             alignment: Alignment.bottomRight,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                if (_nameController.text != '') {
+                  borrowedVs.borrowVest(widget.id, _nameController.text,
+                      widget.size, _timerValue.toInt() * 5);
+                  basicvs.removeLifejacket(widget.id);
+                  Navigator.pop(context);
+                }
+              },
               child: Text('Kölcsönzés'),
               style: ElevatedButton.styleFrom(
                   primary: Theme.of(context).colorScheme.secondary,

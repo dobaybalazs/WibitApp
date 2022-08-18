@@ -5,12 +5,12 @@ import '../sheets/borrow_sheet.dart';
 import '../../providers/basic_vests.dart';
 
 class BasicVest extends StatelessWidget {
-  void startBorrowingVest(BuildContext ctx) {
+  void startBorrowingVest(BuildContext ctx, int id, String size) {
     showModalBottomSheet(
       context: ctx,
       isScrollControlled: true,
       builder: (_) => GestureDetector(
-        child: BorrowSheet(),
+        child: BorrowSheet(id: id, size: size),
         onTap: () {},
         behavior: HitTestBehavior.opaque,
       ),
@@ -44,7 +44,7 @@ class BasicVest extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            startBorrowingVest(context);
+            startBorrowingVest(context, vest.id, vest.size);
           },
           child: Card(
             elevation: 4,
