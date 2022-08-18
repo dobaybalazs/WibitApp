@@ -12,11 +12,10 @@ class BorrowedVestsScreen extends StatelessWidget {
     final vests = Provider.of<BorrowedVests>(context);
     return ListView.builder(
       itemCount: vests.items.length,
-      itemBuilder: (ctx, idx) => BorrowedVest(
-        id: vests.items[idx].id,
-        name: vests.items[idx].name,
-        size: vests.items[idx].size,
-        duration: vests.items[idx].duration,
+      itemBuilder: (ctx, idx) => ChangeNotifierProvider.value(
+        value: vests.items[idx],
+        child: BorrowedVest(),
+        key: ValueKey(vests.items[idx].id),
       ),
     );
   }

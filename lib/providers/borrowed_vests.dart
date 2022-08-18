@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 
-class BorrowedLifeJacket {
+class BorrowedLifeJacket with ChangeNotifier {
   final int id;
   final String name;
   final String size;
-  final int duration;
+  int duration;
 
-  BorrowedLifeJacket(
-      {@required this.id,
-      @required this.name,
-      @required this.size,
-      @required this.duration});
+  BorrowedLifeJacket({
+    @required this.id,
+    @required this.name,
+    @required this.size,
+    @required this.duration,
+  });
+
+  void adjustDuration(int value) {
+    duration = duration + value < 0 ? 0 : duration + value;
+    notifyListeners();
+  }
 }
 
 class BorrowedVests with ChangeNotifier {

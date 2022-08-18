@@ -5,44 +5,27 @@ import '../../providers/basic_vests.dart';
 import '../../providers/borrowed_vests.dart';
 
 class BorrowedVest extends StatefulWidget {
-  final int id;
-  final String name;
-  final String size;
-  final int duration;
-
-  BorrowedVest({
-    @required this.id,
-    @required this.name,
-    @required this.size,
-    @required this.duration,
-  });
   @override
   State<BorrowedVest> createState() => _BorrowedVestState();
 }
 
 class _BorrowedVestState extends State<BorrowedVest> {
-  int _timer = 0;
   Color _background = Colors.white;
-  @override
-  void initState() {
-    _timer = widget.duration;
-    super.initState();
-  }
 
-  Widget _listTileBuilder() {
+  Widget _listTileBuilder(BorrowedLifeJacket vest) {
     return ListTile(
       leading: Image.asset(
         'assets/images/lifejacket.jpg',
         fit: BoxFit.cover,
         height: 56,
       ),
-      title: Text(widget.name),
+      title: Text(vest.name),
       subtitle: Text(
-        '${widget.id}',
+        '${vest.id}',
         style: TextStyle(fontSize: 15, color: Colors.black87),
       ),
       trailing: Text(
-        '${_timer}:00',
+        '${vest.duration}:00',
         style: TextStyle(fontSize: 20),
       ),
     );
@@ -53,13 +36,14 @@ class _BorrowedVestState extends State<BorrowedVest> {
   Widget build(BuildContext context) {
     final basicVests = Provider.of<BasicVests>(context, listen: false);
     final borrowedVests = Provider.of<BorrowedVests>(context, listen: false);
+    final vest = Provider.of<BorrowedLifeJacket>(context, listen: false);
     return Dismissible(
       direction: DismissDirection.endToStart,
       onDismissed: (direction) {
-        basicVests.addNewLifejacket(widget.size, widget.id);
-        borrowedVests.removeVest(widget.id);
+        basicVests.addNewLifejacket(vest.size, vest.id);
+        borrowedVests.removeVest(vest.id);
       },
-      key: ValueKey(widget.id),
+      key: ValueKey(vest.id),
       background: Container(
         color: Theme.of(context).errorColor,
         child: Icon(
@@ -86,7 +70,7 @@ class _BorrowedVestState extends State<BorrowedVest> {
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                     child: Column(
                       children: [
-                        _listTileBuilder(),
+                        _listTileBuilder(vest),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 0.0, horizontal: 8.0),
@@ -102,8 +86,8 @@ class _BorrowedVestState extends State<BorrowedVest> {
                               IconButton(
                                 onPressed: () {
                                   setState(() {
-                                    _timer = (_timer - 5 < 0) ? 0 : _timer - 5;
-                                    if (_timer == 0) {
+                                    vest.adjustDuration(-5);
+                                    if (vest.duration == 0) {
                                       _background = Colors.red;
                                     }
                                   });
@@ -117,8 +101,8 @@ class _BorrowedVestState extends State<BorrowedVest> {
                               IconButton(
                                 onPressed: () {
                                   setState(() {
-                                    _timer += 5;
-                                    if (_timer != 0) {
+                                    vest.adjustDuration(5);
+                                    if (vest.duration != 0) {
                                       _background = Colors.white;
                                     }
                                   });
@@ -136,7 +120,7 @@ class _BorrowedVestState extends State<BorrowedVest> {
                     color: _background,
                     margin:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                    child: _listTileBuilder(),
+                    child: _listTileBuilder(vest),
                   ),
           )
         ],

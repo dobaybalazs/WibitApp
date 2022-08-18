@@ -5,7 +5,8 @@ class ChartBar extends StatelessWidget {
   final int quant;
   final int totalVestNum;
 
-  ChartBar({@required this.name, @required this.quant,@required this.totalVestNum});
+  ChartBar(
+      {@required this.name, @required this.quant, @required this.totalVestNum});
 
   @override
   Widget build(BuildContext context) {
@@ -23,33 +24,26 @@ class ChartBar extends StatelessWidget {
                 child: Container(
                   height: constraints.maxHeight * 0.6,
                   width: 10,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1.0, color: Colors.black87),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                   child: Stack(
                     children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.black38, width: 1.0),
-                            borderRadius: BorderRadius.circular(10),
-                            color: Theme.of(context).colorScheme.secondary),
-                      ),
-                      FractionallySizedBox(
-                        heightFactor: 1 - (quant / totalVestNum),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: BorderDirectional(
-                              start: BorderSide(
-                                width: 1.0,
-                                color: Colors.black38,
-                              ),
-                              end: BorderSide(
-                                width: 1.0,
-                                color: Colors.black38,
-                              ),
-                              top: BorderSide(
-                                width: 1.0,
-                                color: Colors.black38,
-                              ),
+                              color: Theme.of(context).colorScheme.secondary),
+                        ),
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: FractionallySizedBox(
+                          heightFactor: 1 - (quant / totalVestNum),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
                             ),
                           ),
                         ),
