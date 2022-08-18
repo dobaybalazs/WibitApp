@@ -8,12 +8,16 @@ class ManageVestsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final vestsData = Provider.of<BasicVests>(context);
-    return ListView.builder(
-      itemBuilder: (context, index) => ChangeNotifierProvider.value(
-        value: vestsData.vests[index],
-        child: BasicVest(),
-      ),
-      itemCount: vestsData.itemCount,
-    );
+    return vestsData.vests.isEmpty
+        ? Center(
+            child: Text('Nincsen(ek) kiadható mellény(ek)'),
+          )
+        : ListView.builder(
+            itemBuilder: (context, index) => ChangeNotifierProvider.value(
+              value: vestsData.vests[index],
+              child: BasicVest(),
+            ),
+            itemCount: vestsData.itemCount,
+          );
   }
 }

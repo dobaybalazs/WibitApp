@@ -20,12 +20,7 @@ class BorrowedLifeJacket with ChangeNotifier {
 }
 
 class BorrowedVests with ChangeNotifier {
-  List<BorrowedLifeJacket> _items = [
-    BorrowedLifeJacket(
-        id: 1, name: 'Pistef József', size: 'Mini', duration: 90),
-    BorrowedLifeJacket(id: 2, name: 'Lukapop Simon', size: 'XXL', duration: 60),
-    BorrowedLifeJacket(id: 3, name: 'Nyas Gem', size: 'XL', duration: 45),
-  ];
+  List<BorrowedLifeJacket> _items = [];
 
   List<BorrowedLifeJacket> get items {
     return [..._items];
