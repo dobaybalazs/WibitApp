@@ -32,6 +32,7 @@ dependencies:
   intl: ^0.17.0
   provider: ^6.0.3
   flutter_launcher_icons: "^0.10.0"
+  signature: ^5.2.1
 
 flutter_icons:
   android: "WibitApp"

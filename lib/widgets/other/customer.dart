@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Customer extends StatefulWidget {
   final String name;
   final int arrivalTime;
   final int duration;
   final int number;
+  final SvgPicture signature;
 
-  Customer(this.name, this.arrivalTime, this.duration, this.number);
+  Customer(
+      this.name, this.arrivalTime, this.duration, this.number, this.signature);
   @override
   State<Customer> createState() => _CustomerState();
 }
@@ -54,9 +57,10 @@ class _CustomerState extends State<Customer> {
                         left: 5,
                         right: 5,
                       ),
-                      color: Colors.black45,
+                      color: Colors.black12,
                       width: double.infinity,
-                      height: 150,
+                      height: 200,
+                      child: widget.signature,
                     )
                   ],
                 ),

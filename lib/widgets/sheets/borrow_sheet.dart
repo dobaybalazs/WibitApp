@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:signature/signature.dart';
 
 import '../../providers/borrowed_vests.dart' show BorrowedVests;
 import '../../providers/basic_vests.dart';
@@ -19,6 +20,21 @@ class _BorrowSheetState extends State<BorrowSheet> {
   double _timerValue = 0;
 
   final _nameController = TextEditingController();
+
+  final SignatureController _signatureController = SignatureController(
+    penStrokeWidth: 2.5,
+    penColor: Colors.black,
+    exportBackgroundColor: Colors.grey,
+    exportPenColor: Colors.black,
+  );
+
+  @override
+  void initState() {
+    _signatureController.addListener(() {
+      print("Value changed");
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +85,13 @@ class _BorrowSheetState extends State<BorrowSheet> {
               controller: _nameController,
             ),
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 10),
+          SizedBox(
+            height: 10,
+          ),
+          Signature(
+            controller: _signatureController,
             height: 200,
-            width: double.infinity,
-            color: Colors.black12,
+            backgroundColor: Colors.black12,
           ),
           Container(
             alignment: Alignment.bottomRight,
@@ -82,8 +100,13 @@ class _BorrowSheetState extends State<BorrowSheet> {
                 if (_nameController.text != '') {
                   borrowedVs.borrowVest(widget.id, _nameController.text,
                       widget.size, _timerValue.toInt() * 5);
-                  customers.addCustomer(_nameController.text, 11,
-                      _timerValue.toInt() * 5, widget.id);
+                  customers.addCustomer(
+                    _nameController.text,
+                    11,
+                    _timerValue.toInt() * 5,
+                    widget.id,
+                    _signatureController.toSVG(),
+                  );
                   basicvs.removeLifejacket(widget.id);
                   Navigator.pop(context);
                 }

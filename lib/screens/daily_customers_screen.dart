@@ -17,10 +17,12 @@ class DailyCustomersScreen extends StatelessWidget {
         : ListView.builder(
             itemCount: customerData.customers.length,
             itemBuilder: (context, idx) => Customer(
-                customerData.customers.values.toList()[idx].name,
-                customerData.customers.values.toList()[idx].arrivalTime,
-                customerData.customers.values.toList()[idx].duration,
-                customerData.customers.values.toList()[idx].number),
+              customerData.customers.values.toList()[idx].name,
+              customerData.customers.values.toList()[idx].arrivalTime,
+              customerData.customers.values.toList()[idx].duration,
+              customerData.customers.values.toList()[idx].number,
+              customerData.customers.values.toList()[idx].signature,
+            ),
           );
   }
 }
