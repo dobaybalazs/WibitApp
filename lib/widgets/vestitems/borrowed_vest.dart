@@ -10,8 +10,6 @@ class BorrowedVest extends StatefulWidget {
 }
 
 class _BorrowedVestState extends State<BorrowedVest> {
-  Color _background = Colors.white;
-
   Widget _listTileBuilder(BorrowedLifeJacket vest) {
     return ListTile(
       leading: Image.asset(
@@ -25,7 +23,7 @@ class _BorrowedVestState extends State<BorrowedVest> {
         style: TextStyle(fontSize: 15, color: Colors.black87),
       ),
       trailing: Text(
-        '${vest.duration}:00',
+        '${vest.duration.inMinutes < 10 ? '0${vest.duration.inMinutes}' : vest.duration.inMinutes}:${vest.duration.inSeconds % 60 == 0 ? '00' : vest.duration.inSeconds % 60}',
         style: TextStyle(fontSize: 20),
       ),
     );
@@ -36,7 +34,7 @@ class _BorrowedVestState extends State<BorrowedVest> {
   Widget build(BuildContext context) {
     final basicVests = Provider.of<BasicVests>(context, listen: false);
     final borrowedVests = Provider.of<BorrowedVests>(context, listen: false);
-    final vest = Provider.of<BorrowedLifeJacket>(context, listen: false);
+    final vest = Provider.of<BorrowedLifeJacket>(context);
     return Dismissible(
       direction: DismissDirection.endToStart,
       onDismissed: (direction) {
@@ -63,7 +61,7 @@ class _BorrowedVestState extends State<BorrowedVest> {
         child: _expanded
             ? Card(
                 elevation: 4,
-                color: _background,
+                color: vest.isOver ? Colors.red : Colors.white,
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                 child: Column(
                   children: [
@@ -84,33 +82,52 @@ class _BorrowedVestState extends State<BorrowedVest> {
                             onPressed: () {
                               setState(() {
                                 vest.adjustDuration(-5);
-                                if (vest.duration == 0) {
-                                  _background = Colors.red;
-                                }
                               });
                             },
-                            icon: Icon(Icons.remove),
+                            icon: Icon(Icons.remove_circle_outline),
                           ),
                           IconButton(
                             onPressed: () {
                               setState(() {
-                                vest.toggleIsStopped();
+                                vest.adjustDuration(-1);
                               });
                             },
-                            icon: vest.isStopped
-                                ? Icon(Icons.play_arrow)
-                                : Icon(Icons.pause),
+                            icon: Icon(Icons.remove),
+                          ),
+                          vest.isStopped
+                              ? IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      vest.toggleIsStopped();
+                                      vest.startTimer();
+                                    });
+                                  },
+                                  icon: Icon(Icons.play_arrow),
+                                )
+                              : IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      vest.toggleIsStopped();
+                                      vest.stopTimer();
+                                    });
+                                  },
+                                  icon: Icon(Icons.pause),
+                                ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                vest.adjustDuration(1);
+                              });
+                            },
+                            icon: Icon(Icons.add),
                           ),
                           IconButton(
                             onPressed: () {
                               setState(() {
                                 vest.adjustDuration(5);
-                                if (vest.duration != 0) {
-                                  _background = Colors.white;
-                                }
                               });
                             },
-                            icon: Icon(Icons.add),
+                            icon: Icon(Icons.add_box_outlined),
                           ),
                         ],
                       ),
@@ -120,7 +137,7 @@ class _BorrowedVestState extends State<BorrowedVest> {
               )
             : Card(
                 elevation: 4,
-                color: _background,
+                color: vest.isOver ? Colors.red : Colors.white,
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                 child: _listTileBuilder(vest),
               ),

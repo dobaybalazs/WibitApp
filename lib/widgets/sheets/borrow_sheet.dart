@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:signature/signature.dart';
@@ -30,9 +31,7 @@ class _BorrowSheetState extends State<BorrowSheet> {
 
   @override
   void initState() {
-    _signatureController.addListener(() {
-      print("Value changed");
-    });
+    _signatureController.addListener(() {});
     super.initState();
   }
 
@@ -98,8 +97,12 @@ class _BorrowSheetState extends State<BorrowSheet> {
             child: ElevatedButton(
               onPressed: () {
                 if (_nameController.text != '') {
-                  borrowedVs.borrowVest(widget.id, _nameController.text,
-                      widget.size, _timerValue.toInt() * 5);
+                  borrowedVs.borrowVest(
+                    widget.id,
+                    _nameController.text,
+                    widget.size,
+                    Duration(minutes: _timerValue.toInt() * 5),
+                  );
                   customers.addCustomer(
                     _nameController.text,
                     11,

@@ -17,9 +17,9 @@ class BorrowedVestsScreen extends StatelessWidget {
         : ListView.builder(
             itemCount: vests.items.length,
             itemBuilder: (ctx, idx) => ChangeNotifierProvider.value(
-              value: vests.items[idx],
+              value: vests.sortedItems[idx],
               child: BorrowedVest(),
-              key: ValueKey(vests.items[idx].id),
+              key: ValueKey(vests.sortedItems[idx].id),
             ),
           );
   }
