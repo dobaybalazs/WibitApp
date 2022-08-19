@@ -101,8 +101,8 @@ class _BorrowedVestState extends State<BorrowedVest> {
                                   });
                                 },
                                 icon: vest.isStopped
-                                    ? Icon(Icons.pause)
-                                    : Icon(Icons.play_arrow),
+                                    ? Icon(Icons.play_arrow)
+                                    : Icon(Icons.pause),
                               ),
                               IconButton(
                                 onPressed: () {
