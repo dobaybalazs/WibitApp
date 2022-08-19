@@ -54,82 +54,76 @@ class _BorrowedVestState extends State<BorrowedVest> {
         alignment: Alignment.centerRight,
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       ),
-      child: Column(
-        children: <Widget>[
-          InkWell(
-            onTap: () {
-              setState(() {
-                _expanded = !_expanded;
-              });
-            },
-            child: _expanded
-                ? Card(
-                    elevation: 4,
-                    color: _background,
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                    child: Column(
-                      children: [
-                        _listTileBuilder(vest),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 0.0, horizontal: 8.0),
-                          child: Divider(
-                            thickness: 1.0,
-                            color: Colors.black12,
-                          ),
-                        ),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    vest.adjustDuration(-5);
-                                    if (vest.duration == 0) {
-                                      _background = Colors.red;
-                                    }
-                                  });
-                                },
-                                icon: Icon(Icons.remove),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    vest.toggleIsStopped();
-                                  });
-                                },
-                                icon: vest.isStopped
-                                    ? Icon(Icons.play_arrow)
-                                    : Icon(Icons.pause),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    vest.adjustDuration(5);
-                                    if (vest.duration != 0) {
-                                      _background = Colors.white;
-                                    }
-                                  });
-                                },
-                                icon: Icon(Icons.add),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
+      child: InkWell(
+        onTap: () {
+          setState(() {
+            _expanded = !_expanded;
+          });
+        },
+        child: _expanded
+            ? Card(
+                elevation: 4,
+                color: _background,
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                child: Column(
+                  children: [
+                    _listTileBuilder(vest),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 0.0, horizontal: 8.0),
+                      child: Divider(
+                        thickness: 1.0,
+                        color: Colors.black12,
+                      ),
                     ),
-                  )
-                : Card(
-                    elevation: 4,
-                    color: _background,
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-                    child: _listTileBuilder(vest),
-                  ),
-          )
-        ],
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                vest.adjustDuration(-5);
+                                if (vest.duration == 0) {
+                                  _background = Colors.red;
+                                }
+                              });
+                            },
+                            icon: Icon(Icons.remove),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                vest.toggleIsStopped();
+                              });
+                            },
+                            icon: vest.isStopped
+                                ? Icon(Icons.play_arrow)
+                                : Icon(Icons.pause),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                vest.adjustDuration(5);
+                                if (vest.duration != 0) {
+                                  _background = Colors.white;
+                                }
+                              });
+                            },
+                            icon: Icon(Icons.add),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+            : Card(
+                elevation: 4,
+                color: _background,
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+                child: _listTileBuilder(vest),
+              ),
       ),
     );
   }

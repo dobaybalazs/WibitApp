@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 import '../../providers/basic_vests.dart';
 
 class AddVestSheet extends StatefulWidget {
@@ -72,6 +71,7 @@ class _AddVestSheetState extends State<AddVestSheet> {
                     if (_numberController.text != '') {
                       vests.addNewLifejacket(
                           _dropdownValue, int.parse(_numberController.text));
+                      Navigator.pop(context);
                     }
                   },
                   child: Icon(Icons.check),
