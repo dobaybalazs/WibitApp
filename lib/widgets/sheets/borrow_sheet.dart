@@ -105,8 +105,8 @@ class _BorrowSheetState extends State<BorrowSheet> {
                   );
                   customers.addCustomer(
                     _nameController.text,
-                    11,
-                    _timerValue.toInt() * 5,
+                    DateTime.now(),
+                    Duration(minutes: _timerValue.toInt() * 5),
                     widget.id,
                     _signatureController.toSVG(),
                   );

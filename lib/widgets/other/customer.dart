@@ -1,10 +1,11 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Customer extends StatefulWidget {
   final String name;
-  final int arrivalTime;
-  final int duration;
+  final DateTime arrivalTime;
+  final Duration duration;
   final int number;
   final SvgPicture signature;
 
@@ -23,8 +24,9 @@ class _CustomerState extends State<Customer> {
         size: 38,
       ),
       title: Text(widget.name),
-      subtitle: Text('${widget.number}'),
-      trailing: Text('${widget.arrivalTime} - ${widget.duration}'),
+      subtitle: Text('Szám:${widget.number}'),
+      trailing: Text(
+          '${DateFormat('Hm').format(widget.arrivalTime)} - ${DateFormat('Hm').format(widget.arrivalTime.add(widget.duration))}'),
     );
   }
 

@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class DailyCustomer {
   final String name;
-  final int arrivalTime;
-  final int duration;
+  final DateTime arrivalTime;
+  final Duration duration;
   final int number;
   final SvgPicture signature;
 
@@ -24,7 +24,7 @@ class DailyCustomers with ChangeNotifier {
     return {..._customers};
   }
 
-  void addCustomer(String name, int arrivalTime, int duration, int number,
+  void addCustomer(String name, DateTime arrivalTime, Duration duration, int number,
       SvgPicture signature) {
     _customers[DateTime.now().toString()] = DailyCustomer(
       name: name,
