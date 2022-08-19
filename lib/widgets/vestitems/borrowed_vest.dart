@@ -95,8 +95,14 @@ class _BorrowedVestState extends State<BorrowedVest> {
                                 icon: Icon(Icons.remove),
                               ),
                               IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.pause),
+                                onPressed: () {
+                                  setState(() {
+                                    vest.toggleIsStopped();
+                                  });
+                                },
+                                icon: vest.isStopped
+                                    ? Icon(Icons.pause)
+                                    : Icon(Icons.play_arrow),
                               ),
                               IconButton(
                                 onPressed: () {

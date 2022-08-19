@@ -5,16 +5,23 @@ class BorrowedLifeJacket with ChangeNotifier {
   final String name;
   final String size;
   int duration;
+  bool isStopped;
 
   BorrowedLifeJacket({
     @required this.id,
     @required this.name,
     @required this.size,
     @required this.duration,
+    this.isStopped = true,
   });
 
   void adjustDuration(int value) {
     duration = duration + value < 0 ? 0 : duration + value;
+    notifyListeners();
+  }
+
+  void toggleIsStopped() {
+    isStopped = !isStopped;
     notifyListeners();
   }
 }
