@@ -23,7 +23,7 @@ class _BorrowedVestState extends State<BorrowedVest> {
         style: TextStyle(fontSize: 15, color: Colors.black87),
       ),
       trailing: Text(
-        '${vest.duration.inMinutes < 10 ? '0${vest.duration.inMinutes}' : vest.duration.inMinutes}:${vest.duration.inSeconds % 60 == 0 ? '00' : vest.duration.inSeconds % 60}',
+        '${vest.duration.inMinutes < 10 ? '0${vest.duration.inMinutes}' : vest.duration.inMinutes}:${vest.duration.inSeconds % 60 < 10 ? '0${vest.duration.inSeconds % 60}' : vest.duration.inSeconds % 60}',
         style: TextStyle(fontSize: 20),
       ),
     );
