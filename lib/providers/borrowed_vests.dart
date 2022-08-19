@@ -76,6 +76,10 @@ class BorrowedVests with ChangeNotifier {
     return [..._items];
   }
 
+  Duration getDuration(int id) {
+    return _items.firstWhere((element) => element.id == id).duration;
+  }
+
   void borrowVest(int id, String name, String size, Duration duration) {
     _items.add(
       BorrowedLifeJacket(id: id, name: name, size: size, duration: duration),

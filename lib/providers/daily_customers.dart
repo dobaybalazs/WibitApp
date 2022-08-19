@@ -24,15 +24,20 @@ class DailyCustomers with ChangeNotifier {
     return {..._customers};
   }
 
-  void addCustomer(String name, DateTime arrivalTime, Duration duration, int number,
-      SvgPicture signature) {
-    _customers[DateTime.now().toString()] = DailyCustomer(
+  void addCustomer(String name, DateTime arrivalTime, Duration duration,
+      int number, SvgPicture signature) {
+    _customers[arrivalTime.toString()] = DailyCustomer(
       name: name,
       arrivalTime: arrivalTime,
       duration: duration,
       number: number,
       signature: signature,
     );
+    notifyListeners();
+  }
+
+  void deleteCostumer(DateTime arrivalTime) {
+    _customers.remove(arrivalTime.toString());
     notifyListeners();
   }
 
