@@ -31,7 +31,7 @@ class _CustomerState extends State<Customer> {
       title: Text(widget.name),
       subtitle: Text('Szám:${widget.number}'),
       trailing: Container(
-        width: 130,
+        width: 142,
         child: Row(
           children: <Widget>[
             Text(
