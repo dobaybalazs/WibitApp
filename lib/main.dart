@@ -1,6 +1,7 @@
 //flutter related
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 //theme color
 import './constants/main_color.dart' show MainColor;
