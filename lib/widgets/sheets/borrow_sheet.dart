@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/borrowed_vests.dart' show BorrowedVests;
 import '../../providers/basic_vests.dart';
+import '../../providers/daily_customers.dart';
 
 class BorrowSheet extends StatefulWidget {
   final int id;
@@ -23,6 +24,7 @@ class _BorrowSheetState extends State<BorrowSheet> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final borrowedVs = Provider.of<BorrowedVests>(context, listen: false);
+    final customers = Provider.of<DailyCustomers>(context, listen: false);
     final basicvs = Provider.of<BasicVests>(context, listen: false);
     return Container(
       height: mediaQuery.size.height * 0.6,
@@ -80,6 +82,8 @@ class _BorrowSheetState extends State<BorrowSheet> {
                 if (_nameController.text != '') {
                   borrowedVs.borrowVest(widget.id, _nameController.text,
                       widget.size, _timerValue.toInt() * 5);
+                  customers.addCustomer(_nameController.text, 11,
+                      _timerValue.toInt() * 5, widget.id);
                   basicvs.removeLifejacket(widget.id);
                   Navigator.pop(context);
                 }

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/basic_vests.dart';
 
+
 class AddVestSheet extends StatefulWidget {
   @override
   State<AddVestSheet> createState() => _AddVestSheetState();
@@ -16,6 +17,7 @@ class _AddVestSheetState extends State<AddVestSheet> {
   @override
   Widget build(BuildContext context) {
     final vests = Provider.of<BasicVests>(context, listen: false);
+    
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
       child: Container(

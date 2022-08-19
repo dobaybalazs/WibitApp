@@ -11,6 +11,7 @@ import './screens/tabs_screen.dart';
 //data
 import './providers/basic_vests.dart';
 import './providers/borrowed_vests.dart';
+import 'providers/daily_customers.dart';
 
 void main() {
   runApp(WibitApp());
@@ -26,6 +27,9 @@ class WibitApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => BorrowedVests(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DailyCustomers(),
         )
       ],
       child: MaterialApp(

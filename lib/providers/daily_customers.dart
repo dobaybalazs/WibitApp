@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class DailyCostumer {
+class DailyCustomer {
   final String name;
   final int arrivalTime;
   final int duration;
   final int number;
 
-  DailyCostumer({
+  DailyCustomer({
     @required this.name,
     @required this.arrivalTime,
     @required this.duration,
@@ -14,15 +14,15 @@ class DailyCostumer {
   });
 }
 
-class DailyCostumers with ChangeNotifier {
-  Map<String, DailyCostumer> _costumers = {};
+class DailyCustomers with ChangeNotifier {
+  Map<String, DailyCustomer> _customers = {};
 
-  Map<String, DailyCostumer> get costumer {
-    return {..._costumers};
+  Map<String, DailyCustomer> get customers {
+    return {..._customers};
   }
 
-  void addCostumer(String name, int arrivalTime, int duration, int number) {
-    _costumers[DateTime.now().toString()] = DailyCostumer(
+  void addCustomer(String name, int arrivalTime, int duration, int number) {
+    _customers[DateTime.now().toString()] = DailyCustomer(
       name: name,
       arrivalTime: arrivalTime,
       duration: duration,
@@ -31,8 +31,8 @@ class DailyCostumers with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteAllCostumers() {
-    _costumers.clear();
+  void deleteAllCustomers() {
+    _customers.clear();
     notifyListeners();
   }
 }

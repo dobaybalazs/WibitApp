@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './borrowed_vests_screen.dart';
-import './daily_costumers_screen.dart';
+import 'daily_customers_screen.dart';
 import './manage_vests_screen.dart';
+import '../providers/daily_customers.dart';
 
 import '../widgets/sheets/chart_sheet.dart';
 import '../widgets/sheets/add_vest_sheet.dart';
@@ -98,7 +100,7 @@ class _TabsScreenState extends State<TabsScreen> {
         ),
       ),
       Page(
-        body: DailyCostumersScreen(),
+        body: DailyCustomersScreen(),
         appBar: AppBar(
           title: Row(
             children: <Widget>[
@@ -115,7 +117,30 @@ class _TabsScreenState extends State<TabsScreen> {
           ),
           actions: <Widget>[
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    content: Text('Törli az összes mai vásárlót?'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('Nem'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Provider.of<DailyCustomers>(context, listen: false)
+                              .deleteAllCustomers();
+                        },
+                        child: Text('Igen'),
+                      )
+                    ],
+                  ),
+                );
+              },
               icon: Icon(Icons.delete),
             )
           ],

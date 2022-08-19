@@ -1,18 +1,37 @@
 import 'package:flutter/material.dart';
 
-class Costumer extends StatefulWidget {
+class Customer extends StatefulWidget {
+  final String name;
+  final int arrivalTime;
+  final int duration;
+  final int number;
+
+  Customer(this.name, this.arrivalTime, this.duration, this.number);
   @override
-  State<Costumer> createState() => _CostumerState();
+  State<Customer> createState() => _CustomerState();
 }
 
-class _CostumerState extends State<Costumer> {
+class _CustomerState extends State<Customer> {
+  Widget _listTileBuilder() {
+    return ListTile(
+      leading: Icon(
+        Icons.account_circle_outlined,
+        color: Theme.of(context).colorScheme.primary,
+        size: 38,
+      ),
+      title: Text(widget.name),
+      subtitle: Text('${widget.number}'),
+      trailing: Text('${widget.arrivalTime} - ${widget.duration}'),
+    );
+  }
+
   bool _isExpanded = false;
   @override
   Widget build(BuildContext context) {
     return _isExpanded
         ? Container(
             margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            key: ValueKey(DateTime.now()),
+            key: ValueKey(DateTime.now().toString() + widget.number.toString()),
             child: InkWell(
               onTap: () {
                 setState(() {
@@ -23,16 +42,7 @@ class _CostumerState extends State<Costumer> {
                 elevation: 3,
                 child: Column(
                   children: <Widget>[
-                    ListTile(
-                      leading: Icon(
-                        Icons.account_circle_outlined,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 38,
-                      ),
-                      title: Text('Pistef József'),
-                      subtitle: Text('55'),
-                      trailing: Text('11:00 - 12:00'),
-                    ),
+                    _listTileBuilder(),
                     Divider(
                       thickness: 1.0,
                       indent: 15.0,
@@ -64,16 +74,7 @@ class _CostumerState extends State<Costumer> {
               },
               child: Card(
                 elevation: 3,
-                child: ListTile(
-                  leading: Icon(
-                    Icons.account_circle_outlined,
-                    color: Theme.of(context).colorScheme.primary,
-                    size: 38,
-                  ),
-                  title: Text('Pistef József'),
-                  subtitle: Text('55'),
-                  trailing: Text('11:00 - 12:00'),
-                ),
+                child: _listTileBuilder(),
               ),
             ),
           );
