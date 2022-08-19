@@ -40,7 +40,10 @@ class ChartBar extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(5),
                         child: FractionallySizedBox(
-                          heightFactor: 1 - (quant / totalVestNum),
+                          heightFactor: 1 -
+                              (totalVestNum == 0
+                                  ? 0.0
+                                  : (quant / totalVestNum)),
                           child: Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
