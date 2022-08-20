@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/basic_vests.dart';
 import '../../providers/borrowed_vests.dart';
+import '../../providers/daily_customers.dart';
 
 class BorrowedVest extends StatefulWidget {
   @override
@@ -39,13 +40,15 @@ class _BorrowedVestState extends State<BorrowedVest> {
       direction: DismissDirection.endToStart,
       onDismissed: (direction) {
         basicVests.addNewLifejacket(vest.size, vest.id);
+        Provider.of<DailyCustomers>(context, listen: false)
+            .setExpDate(vest.arrivalTime);
         borrowedVests.removeVest(vest.id);
       },
       key: ValueKey(vest.id),
       background: Container(
         color: Theme.of(context).errorColor,
         child: Icon(
-          Icons.delete,
+          Icons.delete_sweep,
           color: Colors.white,
           size: 35,
         ),

@@ -141,7 +141,7 @@ class _TabsScreenState extends State<TabsScreen> {
                   ),
                 );
               },
-              icon: Icon(Icons.delete),
+              icon: Icon(Icons.delete_forever),
             )
           ],
         ),

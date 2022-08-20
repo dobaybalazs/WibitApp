@@ -4,14 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 class DailyCustomer {
   final String name;
   final DateTime arrivalTime;
-  final Duration duration;
+  DateTime expdate = DateTime(0);
   final int number;
   final SvgPicture signature;
 
   DailyCustomer({
     @required this.name,
     @required this.arrivalTime,
-    @required this.duration,
     @required this.number,
     @required this.signature,
   });
@@ -24,12 +23,11 @@ class DailyCustomers with ChangeNotifier {
     return {..._customers};
   }
 
-  void addCustomer(String name, DateTime arrivalTime, Duration duration,
-      int number, SvgPicture signature) {
+  void addCustomer(
+      String name, DateTime arrivalTime, int number, SvgPicture signature) {
     _customers[arrivalTime.toString()] = DailyCustomer(
       name: name,
       arrivalTime: arrivalTime,
-      duration: duration,
       number: number,
       signature: signature,
     );
@@ -43,6 +41,18 @@ class DailyCustomers with ChangeNotifier {
 
   void deleteAllCustomers() {
     _customers.clear();
+    notifyListeners();
+  }
+
+  void setExpDate(String arrivalTime) {
+    if (_customers.values
+            .any((element) => element.arrivalTime.toString() == arrivalTime) !=
+        null) {
+      _customers.values
+          .firstWhere(
+              (element) => element.arrivalTime.toString() == arrivalTime)
+          .expdate = DateTime.now();
+    }
     notifyListeners();
   }
 }

@@ -3,25 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/borrowed_vests.dart';
 import '../../providers/daily_customers.dart';
 
 class Customer extends StatefulWidget {
   final String name;
   final DateTime arrivalTime;
-  final Duration duration;
+  final DateTime expTime;
   final int number;
   final SvgPicture signature;
 
   Customer(
-      this.name, this.arrivalTime, this.duration, this.number, this.signature);
+      this.name, this.arrivalTime, this.expTime, this.number, this.signature);
   @override
   State<Customer> createState() => _CustomerState();
 }
 
 class _CustomerState extends State<Customer> {
   Widget _listTileBuilder() {
-    final vests = Provider.of<BorrowedVests>(context, listen: false);
     return ListTile(
       leading: Icon(
         Icons.account_circle_outlined,
@@ -30,12 +28,11 @@ class _CustomerState extends State<Customer> {
       ),
       title: Text(widget.name),
       subtitle: Text('Szám:${widget.number}'),
-      trailing: Container(
-        width: 142,
+      trailing: FittedBox(
         child: Row(
           children: <Widget>[
             Text(
-                '${DateFormat('Hm').format(widget.arrivalTime)} - ${DateFormat('Hm').format(widget.arrivalTime.add(vests.getDuration(widget.number)))}'),
+                '${DateFormat('Hm').format(widget.arrivalTime)} - ${widget.expTime.year == 0 ? '' : DateFormat('Hm').format(widget.expTime)}'),
             IconButton(
               onPressed: () {
                 showDialog(

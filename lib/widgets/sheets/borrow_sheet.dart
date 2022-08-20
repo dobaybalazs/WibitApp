@@ -89,7 +89,8 @@ class _BorrowSheetState extends State<BorrowSheet> {
           ),
           Signature(
             controller: _signatureController,
-            height: 200,
+            width: mediaQuery.size.width * 0.9,
+            height: mediaQuery.size.height * 0.3,
             backgroundColor: Colors.black12,
           ),
           Container(
@@ -97,16 +98,17 @@ class _BorrowSheetState extends State<BorrowSheet> {
             child: ElevatedButton(
               onPressed: () {
                 if (_nameController.text != '') {
+                  var currentTime = DateTime.now();
                   borrowedVs.borrowVest(
                     widget.id,
                     _nameController.text,
+                    currentTime.toString(),
                     widget.size,
                     Duration(minutes: _timerValue.toInt() * 5),
                   );
                   customers.addCustomer(
                     _nameController.text,
-                    DateTime.now(),
-                    Duration(minutes: _timerValue.toInt() * 5),
+                    currentTime,
                     widget.id,
                     _signatureController.toSVG(),
                   );

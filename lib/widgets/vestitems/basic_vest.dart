@@ -35,7 +35,7 @@ class BasicVest extends StatelessWidget {
         background: Container(
           color: Theme.of(context).errorColor,
           child: Icon(
-            Icons.delete,
+            Icons.delete_sweep,
             color: Colors.white,
             size: 35,
           ),

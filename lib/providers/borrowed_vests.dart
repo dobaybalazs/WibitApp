@@ -5,6 +5,7 @@ class BorrowedLifeJacket with ChangeNotifier {
   final int id;
   final String name;
   final String size;
+  final String arrivalTime;
   Timer countDownTimer;
   Duration duration;
   bool isStopped;
@@ -14,6 +15,7 @@ class BorrowedLifeJacket with ChangeNotifier {
     @required this.id,
     @required this.name,
     @required this.size,
+    @required this.arrivalTime,
     @required this.duration,
     this.isStopped = true,
     this.isOver = false,
@@ -80,9 +82,9 @@ class BorrowedVests with ChangeNotifier {
     return _items.firstWhere((element) => element.id == id).duration;
   }
 
-  void borrowVest(int id, String name, String size, Duration duration) {
+  void borrowVest(int id, String name,String arrivalTime, String size, Duration duration) {
     _items.add(
-      BorrowedLifeJacket(id: id, name: name, size: size, duration: duration),
+      BorrowedLifeJacket(id: id, name: name,arrivalTime: arrivalTime, size: size, duration: duration),
     );
     notifyListeners();
   }
