@@ -25,31 +25,9 @@ class _TabsScreenState extends State<TabsScreen> {
   List<Page> _pages = [];
   int _selectedPageIndex = 0;
 
-  void _showStats(BuildContext ctx) {
-    showModalBottomSheet(
-      context: ctx,
-      builder: (_) => GestureDetector(
-        child: ChartSheet(),
-        onTap: () {},
-        behavior: HitTestBehavior.opaque,
-      ),
-    );
-  }
-
-  void _startAddingNewVest(BuildContext ctx) {
-    showModalBottomSheet(
-      context: ctx,
-      isScrollControlled: true,
-      builder: (_) => GestureDetector(
-        child: AddVestSheet(),
-        onTap: () {},
-        behavior: HitTestBehavior.opaque,
-      ),
-    );
-  }
-
   @override
   void initState() {
+    super.initState();
     _pages = [
       Page(
         body: ManageVestsScreen(),
@@ -147,7 +125,29 @@ class _TabsScreenState extends State<TabsScreen> {
         ),
       )
     ];
-    super.initState();
+  }
+
+  void _showStats(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) => GestureDetector(
+        child: ChartSheet(),
+        onTap: () {},
+        behavior: HitTestBehavior.opaque,
+      ),
+    );
+  }
+
+  void _startAddingNewVest(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      isScrollControlled: true,
+      builder: (_) => GestureDetector(
+        child: AddVestSheet(),
+        onTap: () {},
+        behavior: HitTestBehavior.opaque,
+      ),
+    );
   }
 
   void _selectPage(int index) {

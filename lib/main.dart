@@ -62,8 +62,13 @@ class WibitApp extends StatelessWidget {
         home: SplashScreen(
           seconds: 4,
           navigateAfterSeconds: TabsScreen(),
-          title: Text(
+          loadingText: Text(
             'Loading app...',
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+          ),
+          title: Text(
+            'WibitApp',
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
           ),

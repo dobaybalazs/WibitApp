@@ -10,11 +10,8 @@ class BasicLifejacket with ChangeNotifier {
   });
 }
 
-class BasicVests with ChangeNotifier {
-  List<BasicLifejacket> _vests = [
-    BasicLifejacket(id: 156, size: 'Mini'),
-    BasicLifejacket(id: 132, size: 'XL'),
-  ];
+class BasicVests with ChangeNotifier { 
+  List<BasicLifejacket> _vests = [];
 
   List<BasicLifejacket> get vests {
     return [..._vests];
