@@ -7,17 +7,30 @@ import '../providers/basic_vests.dart' show BasicVests;
 class ManageVestsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final vestsData = Provider.of<BasicVests>(context);
-    return vestsData.vests.isEmpty
-        ? Center(
-            child: Text('Nincsen(ek) kiadható mellény(ek)'),
-          )
-        : ListView.builder(
-            itemBuilder: (context, index) => ChangeNotifierProvider.value(
-              value: vestsData.vests[index],
-              child: BasicVest(),
-            ),
-            itemCount: vestsData.itemCount,
-          );
+    //final vestsData = Provider.of<BasicVests>(context);
+    return FutureBuilder(
+      future:
+          Provider.of<BasicVests>(context, listen: false).fetchAndSetPlaces(),
+      builder: (ctx, snapshot) =>
+          snapshot.connectionState == ConnectionState.waiting
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Consumer<BasicVests>(
+                  child: Center(
+                    child: Text('Nincsen(ek) kiadható mellény(ek)'),
+                  ),
+                  builder: (ctx, basicVests, ch) => basicVests.itemCount == 0
+                      ? ch
+                      : ListView.builder(
+                          itemBuilder: (context, index) =>
+                              ChangeNotifierProvider.value(
+                            value: basicVests.vests[index],
+                            child: BasicVest(),
+                          ),
+                          itemCount: basicVests.itemCount,
+                        ),
+                ),
+    );
   }
 }

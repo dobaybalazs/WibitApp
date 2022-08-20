@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../helpers/db_helper.dart';
+
 class BasicLifejacket with ChangeNotifier {
   final int id;
   final String size;
@@ -10,7 +12,7 @@ class BasicLifejacket with ChangeNotifier {
   });
 }
 
-class BasicVests with ChangeNotifier { 
+class BasicVests with ChangeNotifier {
   List<BasicLifejacket> _vests = [];
 
   List<BasicLifejacket> get vests {
@@ -26,6 +28,18 @@ class BasicVests with ChangeNotifier {
       _vests.add(BasicLifejacket(id: id, size: size));
     }
     notifyListeners();
+    DBHelper.insert('basic_vests', {
+      'id': id,
+      'size': size,
+    });
+  }
+
+  Future<void> fetchAndSetPlaces() async {
+    final dataList = await DBHelper.getData('basic_vests');
+    _vests = dataList
+        .map((e) => BasicLifejacket(id: e['id'], size: e['size']))
+        .toList();
+    notifyListeners();
   }
 
   void removeLifejacket(int id) {
@@ -33,5 +47,6 @@ class BasicVests with ChangeNotifier {
       _vests.removeWhere((element) => element.id == id);
     }
     notifyListeners();
+    DBHelper.remove('basic_vests', id);
   }
 }
