@@ -46,13 +46,12 @@ class DailyCustomers with ChangeNotifier {
 
   void setExpDate(String arrivalTime) {
     if (_customers.values
-            .any((element) => element.arrivalTime.toString() == arrivalTime) !=
-        null) {
+        .any((element) => element.arrivalTime.toString() == arrivalTime)) {
       _customers.values
           .firstWhere(
               (element) => element.arrivalTime.toString() == arrivalTime)
           .expdate = DateTime.now();
+      notifyListeners();
     }
-    notifyListeners();
   }
 }
