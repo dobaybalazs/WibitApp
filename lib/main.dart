@@ -41,6 +41,7 @@ class WibitApp extends StatelessWidget {
             primarySwatch: MainColor.navyBlue,
             accentColor: Color.fromRGBO(255, 223, 0, 1.0),
           ),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: 'Raleway',
           appBarTheme: const AppBarTheme(
             titleTextStyle: TextStyle(
@@ -58,9 +59,28 @@ class WibitApp extends StatelessWidget {
             ),
           ),
         ),
-        routes: {
-          '/': (_) => TabsScreen(),
-        },
+        home: SplashScreen(
+          seconds: 4,
+          navigateAfterSeconds: TabsScreen(),
+          title: Text(
+            'Loading app...',
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+          ),
+          gradientBackground: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomLeft,
+              colors: [
+                MainColor.navyBlue.shade100,
+                MainColor.navyBlue,
+                Colors.blue,
+              ]),
+          loaderColor: Color.fromRGBO(255, 223, 0, 1.0),
+          image: Image.asset(
+            'assets/images/logo.png',
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }
