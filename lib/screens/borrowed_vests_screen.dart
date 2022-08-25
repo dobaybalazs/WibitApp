@@ -9,18 +9,30 @@ class BorrowedVestsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vests = Provider.of<BorrowedVests>(context);
-    return vests.items.isEmpty
-        ? Center(
-            child: Text('Nincsen(ek) kölcsönzött mellény(ek)'),
-          )
-        : ListView.builder(
-            itemCount: vests.items.length,
-            itemBuilder: (ctx, idx) => ChangeNotifierProvider.value(
-              value: vests.sortedItems[idx],
-              child: BorrowedVest(),
-              key: ValueKey(vests.sortedItems[idx].id),
+    ;
+    return FutureBuilder(
+      future: Provider.of<BorrowedVests>(context, listen: false)
+          .fetchAndSetBorrowedVests(),
+      builder: (ctx, snapshot) => snapshot.connectionState ==
+              ConnectionState.waiting
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : Consumer<BorrowedVests>(
+              child: Center(
+                child: Text('Nincsen(ek) kiadható mellény(ek)'),
+              ),
+              builder: (ctx, borrowedVests, ch) => borrowedVests.itemCount == 0
+                  ? ch
+                  : ListView.builder(
+                      itemBuilder: (context, index) =>
+                          ChangeNotifierProvider.value(
+                        value: borrowedVests.items[index],
+                        child: BorrowedVest(),
+                      ),
+                      itemCount: borrowedVests.itemCount,
+                    ),
             ),
-          );
+    );
   }
 }

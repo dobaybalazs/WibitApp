@@ -7,10 +7,9 @@ import '../providers/basic_vests.dart' show BasicVests;
 class ManageVestsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //final vestsData = Provider.of<BasicVests>(context);
     return FutureBuilder(
-      future:
-          Provider.of<BasicVests>(context, listen: false).fetchAndSetPlaces(),
+      future: Provider.of<BasicVests>(context, listen: false)
+          .fetchAndSetBasicVests(),
       builder: (ctx, snapshot) =>
           snapshot.connectionState == ConnectionState.waiting
               ? Center(

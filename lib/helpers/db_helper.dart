@@ -6,10 +6,12 @@ class DBHelper {
   static Future<Database> database() async {
     final dbPath = await sql.getDatabasesPath();
     return sql.openDatabase(
-      path.join(dbPath, 'basic_vests.db'),
-      onCreate: (db, version) {
-        return db.execute(
+      path.join(dbPath, 'vests.db'),
+      onCreate: (db, version) async {
+        await db.execute(
             'CREATE TABLE basic_vests(id INTEGER PRIMARY KEY,size TEXT)');
+        await db.execute(
+            'CREATE TABLE borrowed_vests(id INTEGER PRIMARY KEY,name TEXT,duration INTEGER,arrivalTime TEXT,size TEXT)');
       },
       version: 1,
     );

@@ -34,7 +34,7 @@ class BasicVests with ChangeNotifier {
     });
   }
 
-  Future<void> fetchAndSetPlaces() async {
+  Future<void> fetchAndSetBasicVests() async {
     final dataList = await DBHelper.getData('basic_vests');
     _vests = dataList
         .map((e) => BasicLifejacket(id: e['id'], size: e['size']))
