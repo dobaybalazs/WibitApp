@@ -110,7 +110,7 @@ class _BorrowSheetState extends State<BorrowSheet> {
                     _nameController.text,
                     currentTime,
                     widget.id,
-                    _signatureController.toSVG(),
+                    _signatureController.toRawSVG(),
                   );
                   basicvs.removeLifejacket(widget.id);
                   Navigator.pop(context);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/basic_vests.dart';
+import '../../providers/borrowed_vests.dart';
 
 class AddVestSheet extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _AddVestSheetState extends State<AddVestSheet> {
   @override
   Widget build(BuildContext context) {
     final vests = Provider.of<BasicVests>(context, listen: false);
-
+    final borrowedVests = Provider.of<BorrowedVests>(context, listen: false);
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
       child: Container(
@@ -70,9 +71,12 @@ class _AddVestSheetState extends State<AddVestSheet> {
                 FloatingActionButton(
                   onPressed: () {
                     if (_numberController.text != '') {
-                      vests.addNewLifejacket(
-                          _dropdownValue, int.parse(_numberController.text));
-                      Navigator.pop(context);
+                      if (!borrowedVests
+                          .containsId(int.parse(_numberController.text))) {
+                        vests.addNewLifejacket(
+                            _dropdownValue, int.parse(_numberController.text));
+                        Navigator.pop(context);
+                      }
                     }
                   },
                   child: Icon(Icons.check),

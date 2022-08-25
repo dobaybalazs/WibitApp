@@ -6,33 +6,25 @@ import 'package:provider/provider.dart';
 import '../../providers/daily_customers.dart';
 
 class Customer extends StatefulWidget {
-  final String name;
-  final DateTime arrivalTime;
-  final DateTime expTime;
-  final int number;
-  final SvgPicture signature;
-
-  Customer(
-      this.name, this.arrivalTime, this.expTime, this.number, this.signature);
   @override
   State<Customer> createState() => _CustomerState();
 }
 
 class _CustomerState extends State<Customer> {
-  Widget _listTileBuilder() {
+  Widget _listTileBuilder(DailyCustomer customer) {
     return ListTile(
       leading: Icon(
         Icons.account_circle_outlined,
         color: Theme.of(context).colorScheme.primary,
         size: 38,
       ),
-      title: Text(widget.name),
-      subtitle: Text('Szám:${widget.number}'),
+      title: Text(customer.name),
+      subtitle: Text('Szám:${customer.number}'),
       trailing: FittedBox(
         child: Row(
           children: <Widget>[
             Text(
-                '${DateFormat('Hm').format(widget.arrivalTime)} - ${widget.expTime.year == 0 ? '' : DateFormat('Hm').format(widget.expTime)}'),
+                '${DateFormat('Hm').format(customer.arrivalTime)} - ${customer.expdate.year == 0 ? '' : DateFormat('Hm').format(customer.expdate)}'),
             IconButton(
               onPressed: () {
                 showDialog(
@@ -50,7 +42,7 @@ class _CustomerState extends State<Customer> {
                         onPressed: () {
                           Navigator.pop(context);
                           Provider.of<DailyCustomers>(context, listen: false)
-                              .deleteCostumer(widget.arrivalTime);
+                              .deleteCostumer(customer.arrivalTime);
                         },
                         child: Text('Igen'),
                       )
@@ -71,13 +63,14 @@ class _CustomerState extends State<Customer> {
   bool _isExpanded = false;
   @override
   Widget build(BuildContext context) {
+    final customer = Provider.of<DailyCustomer>(context, listen: false);
     return Column(
       children: <Widget>[
         _isExpanded
             ? Container(
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 key: ValueKey(
-                    DateTime.now().toString() + widget.number.toString()),
+                    DateTime.now().toString() + customer.number.toString()),
                 child: InkWell(
                   onTap: () {
                     setState(() {
@@ -88,7 +81,7 @@ class _CustomerState extends State<Customer> {
                     elevation: 3,
                     child: Column(
                       children: <Widget>[
-                        _listTileBuilder(),
+                        _listTileBuilder(customer),
                         Divider(
                           thickness: 1.0,
                           indent: 15.0,
@@ -103,7 +96,7 @@ class _CustomerState extends State<Customer> {
                           color: Colors.black12,
                           width: double.infinity,
                           height: 200,
-                          child: widget.signature,
+                          child: SvgPicture.string(customer.signature),
                         )
                       ],
                     ),
@@ -121,7 +114,7 @@ class _CustomerState extends State<Customer> {
                   },
                   child: Card(
                     elevation: 3,
-                    child: _listTileBuilder(),
+                    child: _listTileBuilder(customer),
                   ),
                 ),
               ),

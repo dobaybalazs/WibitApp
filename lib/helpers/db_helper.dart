@@ -12,6 +12,8 @@ class DBHelper {
             'CREATE TABLE basic_vests(id INTEGER PRIMARY KEY,size TEXT)');
         await db.execute(
             'CREATE TABLE borrowed_vests(id INTEGER PRIMARY KEY,name TEXT,duration INTEGER,arrivalTime TEXT,size TEXT)');
+        await db.execute(
+            'CREATE TABLE daily_customers(id INTEGER PRIMARY KEY,name TEXT,duration INTEGER,signature TEXT)');
       },
       version: 1,
     );

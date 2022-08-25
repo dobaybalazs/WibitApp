@@ -83,6 +83,10 @@ class BorrowedVests with ChangeNotifier {
     return _items.length;
   }
 
+  bool containsId(int id) {
+    return _items.any((element) => element.id == id);
+  }
+
   Duration getDuration(int id) {
     return _items.firstWhere((element) => element.id == id).duration;
   }

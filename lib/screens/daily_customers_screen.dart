@@ -9,20 +9,19 @@ class DailyCustomersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final customerData = Provider.of<DailyCustomers>(context);
-    return customerData.customers.length == 0
-        ? Center(
-            child: Text('Nincsen(ek) mai vásárló(k)'),
-          )
-        : ListView.builder(
-            itemCount: customerData.customers.length,
-            itemBuilder: (context, idx) => Customer(
-              customerData.customers.values.toList()[idx].name,
-              customerData.customers.values.toList()[idx].arrivalTime,
-              customerData.customers.values.toList()[idx].expdate,
-              customerData.customers.values.toList()[idx].number,
-              customerData.customers.values.toList()[idx].signature,
+    return Consumer<DailyCustomers>(
+      child: Center(
+        child: Text('Nincsen(ek) mai vásárló(k)'),
+      ),
+      builder: (ctx, dailyCustomers, ch) => dailyCustomers.itemCount == 0
+          ? ch
+          : ListView.builder(
+              itemCount: dailyCustomers.itemCount,
+              itemBuilder: (context, idx) => ChangeNotifierProvider.value(
+                value: dailyCustomers.customers[idx],
+                child: Customer(),
+              ),
             ),
-          );
+    );
   }
 }

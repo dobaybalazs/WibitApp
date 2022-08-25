@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class DailyCustomer {
+class DailyCustomer with ChangeNotifier {
   final String name;
   final DateTime arrivalTime;
   DateTime expdate = DateTime(0);
   final int number;
-  final SvgPicture signature;
+  final String signature;
 
   DailyCustomer({
     @required this.name,
@@ -19,12 +19,16 @@ class DailyCustomer {
 class DailyCustomers with ChangeNotifier {
   Map<String, DailyCustomer> _customers = {};
 
-  Map<String, DailyCustomer> get customers {
-    return {..._customers};
+  List<DailyCustomer> get customers {
+    return [..._customers.values.toList()];
+  }
+
+  int get itemCount {
+    return _customers.length;
   }
 
   void addCustomer(
-      String name, DateTime arrivalTime, int number, SvgPicture signature) {
+      String name, DateTime arrivalTime, int number, String signature) {
     _customers[arrivalTime.toString()] = DailyCustomer(
       name: name,
       arrivalTime: arrivalTime,
