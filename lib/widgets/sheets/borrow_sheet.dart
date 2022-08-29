@@ -99,6 +99,7 @@ class _BorrowSheetState extends State<BorrowSheet> {
               onPressed: () {
                 if (_nameController.text != '') {
                   var currentTime = DateTime.now();
+                  var basicTime = DateTime(0);
                   borrowedVs.borrowVest(
                     widget.id,
                     _nameController.text,
@@ -111,6 +112,7 @@ class _BorrowSheetState extends State<BorrowSheet> {
                     currentTime,
                     widget.id,
                     _signatureController.toRawSVG(),
+                    basicTime,
                   );
                   basicvs.removeLifejacket(widget.id);
                   Navigator.pop(context);

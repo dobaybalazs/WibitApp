@@ -5,6 +5,9 @@ import './borrowed_vests_screen.dart';
 import 'daily_customers_screen.dart';
 import './manage_vests_screen.dart';
 import '../providers/daily_customers.dart';
+import '../providers/borrowed_vests.dart';
+import '../providers/basic_vests.dart';
+import '../helpers/db_helper.dart';
 
 import '../widgets/sheets/chart_sheet.dart';
 import '../widgets/sheets/add_vest_sheet.dart';

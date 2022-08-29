@@ -9,6 +9,9 @@ import './constants/main_color.dart' show MainColor;
 //screens
 import './screens/tabs_screen.dart';
 
+//database
+import './helpers/db_helper.dart';
+
 //data
 import './providers/basic_vests.dart';
 import './providers/borrowed_vests.dart';
@@ -18,19 +21,65 @@ void main() {
   runApp(WibitApp());
 }
 
-class WibitApp extends StatelessWidget {
+class WibitApp extends StatefulWidget {
+  @override
+  State<WibitApp> createState() => _WibitAppState();
+}
+
+class _WibitAppState extends State<WibitApp> {
+  var _basicVests = [];
+  var _dailyCustomers = [];
+  var _borrowedVests = [];
+
+  void _initData() async {
+    final basicDataList = await DBHelper.getData('basic_vests');
+    _basicVests = basicDataList
+        .map((e) => BasicLifejacket(id: e['id'], size: e['size']))
+        .toList();
+    final customerDataList = await DBHelper.getData('daily_customers');
+    _dailyCustomers = customerDataList
+        .map(
+          (e) => DailyCustomer(
+            arrivalTime: DateTime.parse(e['arrivalTime']),
+            name: e['name'],
+            number: e['number'],
+            signature: e['signature'],
+            expdate: DateTime.parse(e['expdate']),
+          ),
+        )
+        .toList();
+    final borrowedVestsData = await DBHelper.getData('borrowed_vests');
+    _borrowedVests = borrowedVestsData
+        .map(
+          (e) => BorrowedLifeJacket(
+            id: e['id'],
+            name: e['name'],
+            duration: Duration(seconds: e['duration']),
+            arrivalTime: e['arrivalTime'],
+            size: e['size'],
+          ),
+        )
+        .toList();
+  }
+
+  @override
+  void initState() {
+    _initData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => BasicVests(),
+          create: (_) => BasicVests(_basicVests),
         ),
         ChangeNotifierProvider(
-          create: (_) => BorrowedVests(),
+          create: (_) => BorrowedVests(_borrowedVests),
         ),
         ChangeNotifierProvider(
-          create: (_) => DailyCustomers(),
+          create: (_) => DailyCustomers(_dailyCustomers),
         )
       ],
       child: MaterialApp(

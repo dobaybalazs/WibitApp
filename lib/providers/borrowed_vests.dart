@@ -32,6 +32,8 @@ class BorrowedLifeJacket with ChangeNotifier {
     } else {
       setIsOver(false);
     }
+    DBHelper.updateIntData(
+        'borrowed_vests', 'duration', duration.inSeconds, id);
     notifyListeners();
   }
 
@@ -44,6 +46,8 @@ class BorrowedLifeJacket with ChangeNotifier {
         setIsOver(true);
       } else {
         duration = Duration(seconds: seconds);
+        DBHelper.updateIntData(
+            'borrowed_vests', 'duration', duration.inSeconds, id);
       }
       notifyListeners();
     });
@@ -68,11 +72,9 @@ class BorrowedLifeJacket with ChangeNotifier {
 class BorrowedVests with ChangeNotifier {
   List<BorrowedLifeJacket> _items = [];
 
-  List<BorrowedLifeJacket> get items {
-    return [..._items];
-  }
+  BorrowedVests(this._items);
 
-  List<BorrowedLifeJacket> get sortedItems {
+  List<BorrowedLifeJacket> get items {
     _items.sort(
       (a, b) => a.duration.compareTo(b.duration),
     );
@@ -128,7 +130,7 @@ class BorrowedVests with ChangeNotifier {
   }
 
   void removeVest(int id) {
-    if (_items.firstWhere((element) => element.id == id) != null) {
+    if (_items.any((element) => element.id == id)) {
       _items.removeWhere((element) => element.id == id);
     }
     notifyListeners();

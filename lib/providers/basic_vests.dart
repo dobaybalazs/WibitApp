@@ -15,6 +15,8 @@ class BasicLifejacket with ChangeNotifier {
 class BasicVests with ChangeNotifier {
   List<BasicLifejacket> _vests = [];
 
+  BasicVests(this._vests);
+
   List<BasicLifejacket> get vests {
     return [..._vests];
   }
