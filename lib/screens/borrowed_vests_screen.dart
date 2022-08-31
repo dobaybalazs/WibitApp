@@ -11,7 +11,7 @@ class BorrowedVestsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<BorrowedVests>(
       child: Center(
-        child: Text('Nincsen(ek) kiadható mellény(ek)'),
+        child: Text('Nincsen(ek) kölcsönzött mellény(ek)'),
       ),
       builder: (ctx, borrowedVests, ch) => borrowedVests.itemCount == 0
           ? ch

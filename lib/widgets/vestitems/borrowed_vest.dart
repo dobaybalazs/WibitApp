@@ -64,7 +64,7 @@ class _BorrowedVestState extends State<BorrowedVest> {
         child: _expanded
             ? Card(
                 elevation: 4,
-                color: vest.isOver ? Colors.red : Colors.white,
+                color: vest.duration.inSeconds == 0 ? Colors.red : Colors.white,
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                 child: Column(
                   children: [
@@ -140,7 +140,7 @@ class _BorrowedVestState extends State<BorrowedVest> {
               )
             : Card(
                 elevation: 4,
-                color: vest.isOver ? Colors.red : Colors.white,
+                color: vest.duration.inSeconds == 0 ? Colors.red : Colors.white,
                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                 child: _listTileBuilder(vest),
               ),
