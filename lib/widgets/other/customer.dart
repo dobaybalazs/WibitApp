@@ -95,8 +95,17 @@ class _CustomerState extends State<Customer> {
                           ),
                           color: Colors.black12,
                           width: double.infinity,
-                          height: 200,
-                          child: SvgPicture.string(customer.signature),
+                          height: customer.signature != null ? 200 : 50,
+                          child: customer.signature != null
+                              ? SvgPicture.string(customer.signature)
+                              : Center(
+                                  child: Text(
+                                    "Nincs aláírása a kiválasztott vásárlónak",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                         )
                       ],
                     ),
