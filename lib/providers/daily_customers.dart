@@ -51,12 +51,11 @@ class DailyCustomers with ChangeNotifier {
       String signature, DateTime expdate) {
     _customers.add(
       DailyCustomer(
-        name: name,
-        arrivalTime: arrivalTime,
-        number: number,
-        signature: signature,
-        expdate: expdate
-      ),
+          name: name,
+          arrivalTime: arrivalTime,
+          number: number,
+          signature: signature,
+          expdate: expdate),
     );
     notifyListeners();
     DBHelper.insert('daily_customers', {
