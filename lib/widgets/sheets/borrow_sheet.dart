@@ -110,13 +110,11 @@ class _BorrowSheetState extends State<BorrowSheet> {
                 );
                 if (string.length > 1) {
                   var prevLine = <String>[];
-                  for (var j = 0; j < string.length; ++j) {
-                    var newLine = string[j].split('"');
-                    for (var i = 0; i < newLine.length - 1; ++i) {
-                      if (newLine[i].contains('points=')) {
-                        prevLine.add(newLine[i + 1]);
-                      }
-                    }
+                  final svgLine =
+                      RegExp(r'points="(\b[^"]*)"', multiLine: true);
+                  for (var line in string) {
+                    final myMatch = svgLine.firstMatch(line);
+                    prevLine.add(myMatch.group(1));
                   }
                   final list = [];
                   list.add(prevLine[0]);

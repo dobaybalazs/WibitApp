@@ -63,6 +63,7 @@ class _CustomerState extends State<Customer> {
   bool _isExpanded = false;
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     final customer = Provider.of<DailyCustomer>(context, listen: false);
     return Column(
       children: <Widget>[
@@ -94,8 +95,10 @@ class _CustomerState extends State<Customer> {
                             right: 5,
                           ),
                           color: Colors.black12,
-                          width: double.infinity,
-                          height: customer.signature != null ? 200 : 50,
+                          width: mediaQuery.size.width * 0.9,
+                          height: customer.signature != null
+                              ? mediaQuery.size.height * 0.3
+                              : 50,
                           child: customer.signature != null
                               ? SvgPicture.string(customer.signature)
                               : Center(

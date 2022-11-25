@@ -44,20 +44,24 @@ class _TabsScreenState extends State<TabsScreen> {
             const SizedBox(
               width: 9,
             ),
-            const Text('Mellények kezelése')
+            const Text('Mellények')
           ]),
           actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                _startAddingNewVest(context);
-              },
+            FittedBox(
+              child: IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  _startAddingNewVest(context);
+                },
+              ),
             ),
-            IconButton(
-              icon: const Icon(Icons.bar_chart),
-              onPressed: () {
-                _showStats(context);
-              },
+            FittedBox(
+              child: IconButton(
+                icon: const Icon(Icons.bar_chart),
+                onPressed: () {
+                  _showStats(context);
+                },
+              ),
             ),
           ],
         ),
@@ -97,32 +101,34 @@ class _TabsScreenState extends State<TabsScreen> {
             ],
           ),
           actions: <Widget>[
-            IconButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    content: Text('Törli az összes mai vásárlót?'),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text('Nem'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          Provider.of<DailyCustomers>(context, listen: false)
-                              .deleteAllCustomers();
-                        },
-                        child: Text('Igen'),
-                      )
-                    ],
-                  ),
-                );
-              },
-              icon: Icon(Icons.delete_forever),
+            FittedBox(
+              child: IconButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      content: Text('Törli az összes mai vásárlót?'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('Nem'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Provider.of<DailyCustomers>(context, listen: false)
+                                .deleteAllCustomers();
+                          },
+                          child: Text('Igen'),
+                        )
+                      ],
+                    ),
+                  );
+                },
+                icon: Icon(Icons.delete_forever),
+              ),
             )
           ],
         ),
