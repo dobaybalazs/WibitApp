@@ -103,47 +103,49 @@ class _BorrowSheetState extends State<BorrowSheet> {
             alignment: Alignment.bottomRight,
             child: ElevatedButton(
               onPressed: () {
-                String signature = "";
-                var string = _signatureController.toRawSVG().split('>');
-                string.removeWhere(
-                  (element) => !element.contains('points'),
-                );
-                if (string.length > 1) {
-                  var prevLine = <String>[];
-                  final svgLine =
-                      RegExp(r'points="(\b[^"]*)"', multiLine: true);
-                  for (var line in string) {
-                    final myMatch = svgLine.firstMatch(line);
-                    prevLine.add(myMatch.group(1));
-                  }
-                  final list = [];
-                  list.add(prevLine[0]);
-                  for (var j = 1; j < prevLine.length; ++j) {
-                    list.add(prevLine[j].substring(prevLine[j - 1].length));
-                  }
-                  var seqend = <String>[];
-                  for (var j = 0; j < string.length; ++j) {
-                    var newLine = string[j].split('"');
-                    for (var i = 0; i < newLine.length - 1; ++i) {
-                      if (newLine[i].contains('points=')) {
-                        newLine[i + 1] = list[j];
+                String signature = null;
+                if (_signatureController.toRawSVG() != null) {
+                  var string = _signatureController.toRawSVG().split('>');
+                  string.removeWhere(
+                    (element) => !element.contains('points'),
+                  );
+                  if (string.length > 1) {
+                    var prevLine = <String>[];
+                    final svgLine =
+                        RegExp(r'points="(\b[^"]*)"', multiLine: true);
+                    for (var line in string) {
+                      final myMatch = svgLine.firstMatch(line);
+                      prevLine.add(myMatch.group(1));
+                    }
+                    final list = [];
+                    list.add(prevLine[0]);
+                    for (var j = 1; j < prevLine.length; ++j) {
+                      list.add(prevLine[j].substring(prevLine[j - 1].length));
+                    }
+                    var seqend = <String>[];
+                    for (var j = 0; j < string.length; ++j) {
+                      var newLine = string[j].split('"');
+                      for (var i = 0; i < newLine.length - 1; ++i) {
+                        if (newLine[i].contains('points=')) {
+                          newLine[i + 1] = list[j];
+                        }
                       }
+                      var addedS = '';
+                      for (var word in newLine) {
+                        addedS += word;
+                        addedS += '"';
+                      }
+                      seqend.add(addedS.substring(0, addedS.length - 1) + '>');
                     }
-                    var addedS = '';
-                    for (var word in newLine) {
-                      addedS += word;
-                      addedS += '"';
+                    signature +=
+                        '<svg viewBox="0 0 297 174" xmlns="http://www.w3.org/2000/svg">';
+                    for (var line in seqend) {
+                      signature += line;
                     }
-                    seqend.add(addedS.substring(0, addedS.length - 1) + '>');
+                    signature += "\n</svg>";
+                  } else {
+                    signature = _signatureController.toRawSVG();
                   }
-                  signature +=
-                      '<svg viewBox="0 0 297 174" xmlns="http://www.w3.org/2000/svg">';
-                  for (var line in seqend) {
-                    signature += line;
-                  }
-                  signature += "\n</svg>";
-                } else {
-                  signature = _signatureController.toRawSVG();
                 }
                 if (_nameController.text != '') {
                   var currentTime = DateTime.now();
