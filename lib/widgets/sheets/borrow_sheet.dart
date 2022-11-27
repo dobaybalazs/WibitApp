@@ -105,6 +105,7 @@ class _BorrowSheetState extends State<BorrowSheet> {
               onPressed: () {
                 String signature = null;
                 if (_signatureController.toRawSVG() != null) {
+                  signature = "";
                   var string = _signatureController.toRawSVG().split('>');
                   string.removeWhere(
                     (element) => !element.contains('points'),
