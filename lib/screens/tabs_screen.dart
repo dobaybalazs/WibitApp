@@ -7,10 +7,11 @@ import './manage_vests_screen.dart';
 import '../providers/daily_customers.dart';
 import '../providers/borrowed_vests.dart';
 import '../providers/basic_vests.dart';
-import '../helpers/db_helper.dart';
 
 import '../widgets/sheets/chart_sheet.dart';
 import '../widgets/sheets/add_vest_sheet.dart';
+
+enum PopupOptions { Start, Stop, Delete }
 
 class Page {
   final Widget body;
@@ -27,6 +28,25 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   List<Page> _pages = [];
   int _selectedPageIndex = 0;
+
+  PopupMenuItem _buildPopupItem(
+      String text, IconData icon, PopupOptions option) {
+    return PopupMenuItem(
+      child: Row(
+        children: <Widget>[
+          Icon(
+            icon,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Text(text),
+        ],
+      ),
+      value: option,
+    );
+  }
 
   @override
   void initState() {
@@ -82,6 +102,41 @@ class _TabsScreenState extends State<TabsScreen> {
               const Text('Kölcsönzött mellények')
             ],
           ),
+          actions: <Widget>[
+            PopupMenuButton(
+              onSelected: (value) {
+                setState(
+                  () {
+                    final borrowedData =
+                        Provider.of<BorrowedVests>(context, listen: false);
+                    final basicData =
+                        Provider.of<BasicVests>(context, listen: false);
+                    if (value == PopupOptions.Start) {
+                      borrowedData.startAll();
+                    } else if (value == PopupOptions.Stop) {
+                      borrowedData.stopAll();
+                    } else if (value == PopupOptions.Delete) {
+                      borrowedData.items.forEach((element) {
+                        basicData.addNewLifejacket(element.size, element.id);
+                      });
+                      borrowedData.deleteAllVests();
+                    }
+                  },
+                );
+              },
+              icon: Icon(
+                Icons.more_vert,
+              ),
+              itemBuilder: (_) => [
+                _buildPopupItem(
+                    'Összes indítása', Icons.play_arrow, PopupOptions.Start),
+                _buildPopupItem(
+                    'Összes megállítása', Icons.stop, PopupOptions.Stop),
+                _buildPopupItem(
+                    'Összes törlése', Icons.delete, PopupOptions.Delete),
+              ],
+            ),
+          ],
         ),
       ),
       Page(

@@ -38,6 +38,7 @@ class BorrowedLifeJacket with ChangeNotifier {
   }
 
   void startTimer() {
+    isStopped = false;
     countDownTimer = Timer.periodic(Duration(seconds: 1), (_) {
       final seconds = duration.inSeconds - 1;
       if (seconds < 0) {
@@ -55,6 +56,7 @@ class BorrowedLifeJacket with ChangeNotifier {
 
   void stopTimer() {
     countDownTimer.cancel();
+    isStopped = true;
     notifyListeners();
   }
 
@@ -91,6 +93,20 @@ class BorrowedVests with ChangeNotifier {
 
   Duration getDuration(int id) {
     return _items.firstWhere((element) => element.id == id).duration;
+  }
+
+  void startAll() {
+    items.forEach((element) {
+      if (element.isStopped) {
+        element.startTimer();
+      }
+    });
+  }
+
+  void stopAll() {
+    items.forEach((element) {
+      element.stopTimer();
+    });
   }
 
   void borrowVest(
@@ -135,5 +151,11 @@ class BorrowedVests with ChangeNotifier {
     }
     notifyListeners();
     DBHelper.remove('borrowed_vests', id);
+  }
+
+  void deleteAllVests() {
+    _items.clear();
+    notifyListeners();
+    DBHelper.removeAll('borrowed_vests');
   }
 }
